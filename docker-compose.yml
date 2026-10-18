@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: ar_marketplace_postgis
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ar_marketplace
+    ports:
+      - "5433:5432"
+    volumes:
+      - ar_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ar_marketplace"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ar_pgdata:
